@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
     AOS.init({
       duration: 800,
       easing: 'ease-out-cubic',
-      once: true,       // animasiya yalnız bir dəfə işləsin (yuxarı-aşağı scroll edəndə təkrarlanmasın)
+      once: false,       // animasiya yalnız bir dəfə işləsin (yuxarı-aşağı scroll edəndə təkrarlanmasın)
       offset: 80
     });
   }

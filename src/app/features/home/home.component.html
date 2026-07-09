@@ -4,7 +4,7 @@
 <section class="hero">
   <div class="hero-text" data-aos="fade-up" data-aos-delay="0">
     <span class="hero-word-italic">Fresh</span>
-    <h1 class="hero-title">Italian<br />Flavors</h1>
+    <h1 class="hero-title">Italian Flavors</h1>
     <p class="hero-subtitle">
       An iconic Italian kitchen for the whole family, continuing the tradition
       of authentic gastronomy with a modern twist.
@@ -24,68 +24,38 @@
     <img src="./pizza.png" alt="Pizza" />
   </div>
 </section>
-<hr>
+
 
 <!-- ===== POPULAR DISHES ===== -->
-<section class="popular-section" id="menu-section">
+<section class="story-section" id="menu-section">
 
-  <div class="popular-header" data-aos="fade-up">
-    <h2>Popular Dishes</h2>
+  <div class="story-header" data-aos="zoom-out-right" data-aos-duration="900">
+    <h2 class="reveal-title">
+      <span class="reveal-line">
+        <span class="reveal-text"><span class="italic-accent">Food,</span>which cannot be forgotten,</span>
+      </span>
+      <span class="reveal-line">
+        <span class="reveal-text"><span class="italic-accent">the place,</span>you want to return to.</span>
+      </span>
+    </h2>
+    <p class="story-subtitle" data-aos="fade-up" data-aos-delay="300">
+      This is a restaurant where food is always the center of attention.
+      Our dishes amaze the guest, discover new tastes for him and bring real pleasure.
+    </p>
   </div>
 
-  <div class="category-pills" data-aos="fade-up" data-aos-delay="100">
-    <button class="pill" [class.active]="activeCategory() === 'all'" (click)="setActiveCategory('all')">
-      Among all categories
-    </button>
-    @for (category of categories(); track category.id) {
-      <button class="pill" [class.active]="activeCategory() === category.id" (click)="setActiveCategory(category.id)">
-        {{ category.name }}
-      </button>
-    }
+  <div
+    class="story-image-wrapper"
+    data-aos="zoom-in-up"
+    data-aos-duration="1200"
+    data-aos-distance="120"
+    data-aos-delay="100"
+  >
+    <img
+      src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80"
+      alt="Restaurant interior"
+    />
   </div>
-
-  @if (isLoading()) {
-    <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
-  } @else if (popularItems().length === 0) {
-    <div class="empty-state">
-      <i class="fa-solid fa-utensils"></i>
-      <p>Heç bir nəticə tapılmadı.</p>
-    </div>
-  } @else {
-    <div class="popular-grid">
-      @for (item of popularItems(); track item.id; let i = $index) {
-        <div
-          class="popular-card"
-          [class.tall]="i === 0 || i === 3"
-          data-aos="fade-up"
-          [attr.data-aos-delay]="i * 100"
-          (click)="goToDish(item)"
-        >
-          <div class="popular-image-wrapper">
-            @if (item.image_url) {
-              <img [src]="item.image_url" [alt]="item.name" />
-            } @else {
-              <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
-            }
-          </div>
-
-          <div class="popular-info">
-            <h3>{{ item.name }}</h3>
-            @if (item.description) {
-              <p>{{ item.description }}</p>
-            }
-            <span class="choose-link">
-              Choose <i class="fa-solid fa-arrow-up-right"></i>
-            </span>
-          </div>
-
-          <button class="quick-add-btn" (click)="quickAddToCart($event, item)">
-            <i class="fa-solid fa-plus"></i>
-          </button>
-        </div>
-      }
-    </div>
-  }
 
 </section>
 
