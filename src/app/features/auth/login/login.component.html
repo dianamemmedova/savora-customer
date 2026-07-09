@@ -1,0 +1,51 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-text">Savora</span>
+      <p class="logo-tagline">Modern Italian</p>
+    </div>
+
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-subtitle">Log in to order your favorite dishes.</p>
+
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-field">
+        <label>Email</label>
+        <input
+          type="email"
+          [ngModel]="email()"
+          (ngModelChange)="email.set($event)"
+          name="email"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Password</label>
+        <input
+          type="password"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+          name="password"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      @if (errorMessage()) {
+        <p class="error-text">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" class="submit-btn" [disabled]="isLoading()">
+        @if (isLoading()) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Logging in...
+        } @else {
+          Log In <i class="fa-solid fa-arrow-right"></i>
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Don't have an account? <a routerLink="/register">Sign up</a>
+    </p>
+  </div>
+</div>
