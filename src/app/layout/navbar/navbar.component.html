@@ -1,0 +1,21 @@
+<!-- navbar.component.html -->
+<header class="navbar">
+  <span class="logo" routerLink="/home">Savora</span>
+
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search dishes..." />
+  </div>
+
+  <div class="navbar-right">
+    <button class="icon-btn" routerLink="/cart">
+      <i class="fa-solid fa-bag-shopping"></i>
+      @if (cartService.totalItems() > 0) {
+        <span class="cart-badge">{{ cartService.totalItems() }}</span>
+      }
+    </button>
+    <button class="icon-btn" routerLink="/profile">
+      <i class="fa-solid fa-user"></i>
+    </button>
+  </div>
+</header>
