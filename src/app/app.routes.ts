@@ -4,6 +4,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { HomeComponent } from './features/home/home.component';
 import { CartComponent } from './features/cart/cart.component';
 import { OrderTrackingComponent } from './features/order-tracking/order-tracking.component';
+import { ProfileComponent } from './features/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'cart', component: CartComponent },
   { path: 'order-tracking/:id', component: OrderTrackingComponent },
+  { path: 'profile', component: ProfileComponent },
 
 ];

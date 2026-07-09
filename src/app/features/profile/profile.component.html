@@ -1,0 +1,127 @@
+<app-navbar></app-navbar>
+
+<main class="profile-page">
+
+  <section class="profile-header">
+    <div class="avatar-circle">
+      {{ authService.currentUser()?.fullName?.charAt(0) ?? '?' }}
+    </div>
+    <div class="profile-info">
+      <h1>{{ authService.currentUser()?.fullName }}</h1>
+      <p>{{ authService.currentUser()?.email }}</p>
+    </div>
+    <div class="loyalty-card">
+      <i class="fa-solid fa-star"></i>
+      <div>
+        <span class="loyalty-value">{{ authService.currentUser()?.loyaltyPoints ?? 0 }}</span>
+        <span class="loyalty-label">Loyalty Points</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="tab-switcher">
+    <button [class.active]="activeTab() === 'active'" (click)="setTab('active')">Active Orders</button>
+    <button [class.active]="activeTab() === 'past'" (click)="setTab('past')">Past Orders</button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+  } @else {
+
+    @if (activeTab() === 'active') {
+      @if (activeOrders().length === 0) {
+        <div class="empty-state">
+          <i class="fa-solid fa-receipt"></i>
+          <p>Hazırda aktiv sifarişiniz yoxdur.</p>
+          <a routerLink="/home" class="browse-link">Browse Menu</a>
+        </div>
+      } @else {
+        <div class="orders-list">
+          @for (order of activeOrders(); track order.id) {
+            <a [routerLink]="['/order-tracking', order.id]" class="order-row">
+              <div class="order-row-info">
+                <span class="order-number">Order #{{ order.order_number }}</span>
+                <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
+              </div>
+              <span class="status-badge" [class]="'status-' + order.status">{{ order.status }}</span>
+            </a>
+          }
+        </div>
+      }
+    }
+
+    @if (activeTab() === 'past') {
+      @if (pastOrders().length === 0) {
+        <div class="empty-state">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <p>Keçmiş sifarişiniz yoxdur.</p>
+        </div>
+      } @else {
+        <div class="orders-list">
+          @for (order of pastOrders(); track order.id) {
+            <div class="order-row past-order">
+              <div class="order-row-info">
+                <span class="order-number">Order #{{ order.order_number }}</span>
+                <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
+              </div>
+
+              <div class="past-order-actions">
+                <span class="status-badge" [class]="'status-' + order.status">{{ order.status }}</span>
+                @if (order.status === 'completed') {
+                  <button class="review-btn" (click)="openReviewForm(order.id)">
+                    <i class="fa-regular fa-star"></i> Rate
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+  }
+
+  <button class="logout-btn" (click)="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  </button>
+
+</main>
+
+<!-- Rəy Yazma Modalı -->
+@if (reviewingOrderId()) {
+  <div class="modal-backdrop" (click)="closeReviewForm()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <h3>Rate Your Order</h3>
+
+      <div class="star-picker">
+        @for (star of [1, 2, 3, 4, 5]; track star) {
+          <button class="star-btn" (click)="selectRating(star)">
+            <i class="fa-solid fa-star" [class.filled]="star <= selectedRating()"></i>
+          </button>
+        }
+      </div>
+
+      <textarea
+        [ngModel]="reviewComment()"
+        (ngModelChange)="reviewComment.set($event)"
+        placeholder="Share your experience (optional)"
+        rows="3"
+      ></textarea>
+
+      @if (reviewSuccessMessage()) {
+        <p class="review-message">{{ reviewSuccessMessage() }}</p>
+      }
+
+      <div class="modal-actions">
+        <button class="cancel-btn" (click)="closeReviewForm()">Cancel</button>
+        <button class="submit-btn" [disabled]="selectedRating() === 0 || isSubmittingReview()" (click)="submitReview()">
+          @if (isSubmittingReview()) {
+            <i class="fa-solid fa-spinner fa-spin"></i>
+          } @else {
+            Submit Review
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}
