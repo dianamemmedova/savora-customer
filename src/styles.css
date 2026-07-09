@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #D2691E;
+  --primary-dark: #B8571A;
+  --secondary: #2D5A3D;
+  --amber: #F5A623;
+  --success: #1B9C6E;
+  --danger: #D32F2F;
+
+  --bg-cream: #FFF8F0;
+  --surface: #FFFFFF;
+  --surface-alt: #FBF3EA;
+
+  --text-primary: #2A2318;
+  --text-secondary: #8A7D6B;
+
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  --shadow-soft: 0 4px 16px rgba(210, 105, 30, 0.08);
+}
+
+html, body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-cream);
+  color: var(--text-primary);
+}
