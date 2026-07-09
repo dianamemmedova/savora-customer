@@ -1,0 +1,113 @@
+<app-navbar></app-navbar>
+
+<main class="cart-page">
+
+  <h1 class="page-title">Your Cart</h1>
+
+  @if (cartService.items().length === 0) {
+    <div class="empty-cart">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <p>Səbətiniz boşdur.</p>
+    </div>
+  } @else {
+
+    <div class="cart-layout">
+
+      <div class="cart-items-column">
+        @for (item of cartService.items(); track item.menuItemId) {
+          <div class="cart-item-row">
+            <img [src]="item.imageUrl" [alt]="item.name" class="cart-item-image" />
+
+            <div class="cart-item-info">
+              <h4>{{ item.name }}</h4>
+              <span class="cart-item-price">${{ item.unitPrice.toFixed(2) }}</span>
+            </div>
+
+            <div class="quantity-stepper">
+              <button (click)="cartService.updateQuantity(item.menuItemId, item.quantity - 1)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="cartService.updateQuantity(item.menuItemId, item.quantity + 1)">+</button>
+            </div>
+
+            <span class="cart-item-line-total">${{ (item.unitPrice * item.quantity).toFixed(2) }}</span>
+
+            <button class="remove-btn" (click)="cartService.removeItem(item.menuItemId)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        }
+      </div>
+
+      <aside class="checkout-panel">
+
+        <h3>Order Type</h3>
+        <div class="order-type-toggle">
+          <button [class.active]="orderType() === 'dine_in'" (click)="setOrderType('dine_in')">Dine-In</button>
+          <button [class.active]="orderType() === 'takeaway'" (click)="setOrderType('takeaway')">Takeaway</button>
+          <button [class.active]="orderType() === 'delivery'" (click)="setOrderType('delivery')">Delivery</button>
+        </div>
+
+        @if (orderType() === 'delivery') {
+          <div class="form-field">
+            <label>Delivery Address</label>
+            <input
+              type="text"
+              [ngModel]="deliveryAddress()"
+              (ngModelChange)="deliveryAddress.set($event)"
+              placeholder="Enter your address"
+            />
+          </div>
+        }
+
+        <div class="form-field">
+          <label>Special Instructions</label>
+          <textarea
+            [ngModel]="specialInstructions()"
+            (ngModelChange)="specialInstructions.set($event)"
+            placeholder="Any allergies or requests?"
+            rows="2"
+          ></textarea>
+        </div>
+
+        <h3>Add a Tip</h3>
+        <div class="tip-selector">
+          <button [class.active]="tipPercent() === 10" (click)="setTip(10)">10%</button>
+          <button [class.active]="tipPercent() === 15" (click)="setTip(15)">15%</button>
+          <button [class.active]="tipPercent() === 20" (click)="setTip(20)">20%</button>
+        </div>
+
+        <div class="price-summary">
+          <div class="price-row">
+            <span>Subtotal</span>
+            <span>${{ cartService.subtotal().toFixed(2) }}</span>
+          </div>
+          <div class="price-row">
+            <span>Tip ({{ tipPercent() }}%)</span>
+            <span>${{ tipAmount().toFixed(2) }}</span>
+          </div>
+          <p class="price-note">* Tax and delivery fee calculated at checkout</p>
+          <div class="price-row total-row">
+            <span>Estimated Total</span>
+            <span>${{ estimatedTotal().toFixed(2) }}</span>
+          </div>
+        </div>
+
+        @if (errorMessage()) {
+          <p class="error-text">{{ errorMessage() }}</p>
+        }
+
+        <button class="place-order-btn" [disabled]="isPlacingOrder()" (click)="placeOrder()">
+          @if (isPlacingOrder()) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Placing Order...
+          } @else {
+            Place Order
+          }
+        </button>
+
+      </aside>
+
+    </div>
+
+  }
+
+</main>

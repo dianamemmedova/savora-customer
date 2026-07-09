@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+
+<main class="tracking-page">
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <i class="fa-solid fa-spinner fa-spin"></i> Loading order...
+    </div>
+  } @else if (errorMessage()) {
+    <div class="error-state">{{ errorMessage() }}</div>
+  } @else if (order()) {
+
+    <div class="tracking-card">
+
+      <div class="order-header">
+        <span class="order-number">Order #{{ order().order_number }}</span>
+        <span class="order-status-badge" [class]="'status-' + order().status">
+          {{ order().status | titlecase }}
+        </span>
+      </div>
+
+      <div class="stepper">
+        @for (step of steps; track step.status; let last = $last) {
+          <div class="step" [class.active]="isStepActive(step.status)" [class.current]="isStepCurrent(step.status)">
+            <div class="step-icon">
+              <i class="fa-solid" [class]="step.icon"></i>
+            </div>
+            <span class="step-label">{{ step.label }}</span>
+          </div>
+          @if (!last) {
+            <div class="step-connector" [class.active]="isStepActive(step.status)"></div>
+          }
+        }
+      </div>
+
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        @for (item of order().items; track item.id) {
+          <div class="summary-row">
+            <span>{{ item.quantity }}x {{ item.item_name }}</span>
+            <span>${{ item.line_total }}</span>
+          </div>
+        }
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>${{ order().subtotal }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>${{ order().tax_amount }}</span>
+        </div>
+        @if (order().delivery_fee > 0) {
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span>${{ order().delivery_fee }}</span>
+          </div>
+        }
+        <div class="summary-row">
+          <span>Tip</span>
+          <span>${{ order().tip_amount }}</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span>${{ order().total_amount }}</span>
+        </div>
+      </div>
+
+      <a routerLink="/home" class="back-btn">Back to Menu</a>
+
+    </div>
+
+  }
+
+</main>
