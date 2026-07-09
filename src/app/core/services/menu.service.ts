@@ -2,6 +2,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { map } from 'rxjs';
 
 export interface MenuItem {
   id: string;
@@ -32,6 +33,22 @@ export class MenuService {
   getFullMenu() {
     return this.http.get<{ categories: MenuCategory[] }>(`${this.apiUrl}/menu`);
   }
+  searchItems(query: string) {
+      return this.http.get<{ categories: MenuCategory[] }>(`${this.apiUrl}/menu`).pipe(
+        map(response => {
+          const filtered: MenuCategory[] = response.categories
+            .map(cat => ({
+              ...cat,
+              items: cat.items.filter(item =>
+                item.name.toLowerCase().includes(query.toLowerCase()) ||
+                item.description?.toLowerCase().includes(query.toLowerCase())
+              )
+            }))
+            .filter(cat => cat.items.length > 0);
+          return { categories: filtered };
+        })
+      );
+    }
 
   getMenuItemById(id: string) {
     return this.http.get<{ item: any }>(`${this.apiUrl}/menu/items/${id}`);

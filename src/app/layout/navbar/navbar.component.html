@@ -1,21 +1,24 @@
-<!-- navbar.component.html -->
-<header class="navbar">
-  <span class="logo" routerLink="/home">Savora</span>
+<header class="navbar" [class.navbar-dark]="isDark()">
+  <div class="navbar-left">
+    <button class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+    <a routerLink="/home" class="nav-text-link">Menu</a>
+    <a href="#" class="nav-text-link">Specials</a>
+  </div>
 
-  <div class="search-bar">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" placeholder="Search dishes..." />
+  <div class="navbar-center">
+    <span class="logo" routerLink="/home">Savora</span>
+    <span class="logo-tagline">Restaurant &amp; Delivery</span>
   </div>
 
   <div class="navbar-right">
-    <button class="icon-btn" routerLink="/cart">
-      <i class="fa-solid fa-bag-shopping"></i>
+    <a routerLink="/profile" class="nav-text-link">
+      <i class="fa-regular fa-user"></i> My Account
+    </a>
+    <a routerLink="/cart" class="nav-text-link">
+      <i class="fa-solid fa-bag-shopping"></i> Basket
       @if (cartService.totalItems() > 0) {
-        <span class="cart-badge">{{ cartService.totalItems() }}</span>
+        <span class="cart-count">{{ cartService.totalItems() }}</span>
       }
-    </button>
-    <button class="icon-btn" routerLink="/profile">
-      <i class="fa-solid fa-user"></i>
-    </button>
+    </a>
   </div>
 </header>

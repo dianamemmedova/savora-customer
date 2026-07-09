@@ -1,57 +1,138 @@
-<!-- home.component.html -->
-<app-navbar></app-navbar>
+<app-navbar [isDark]="true" (searchChanged)="onSearch($event)"></app-navbar>
 
-<main class="home-main">
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-text" data-aos="fade-up" data-aos-delay="0">
+    <span class="hero-word-italic">Fresh</span>
+    <h1 class="hero-title">Italian<br />Flavors</h1>
+    <p class="hero-subtitle">
+      An iconic Italian kitchen for the whole family, continuing the tradition
+      of authentic gastronomy with a modern twist.
+    </p>
+  </div>
+
+  <button class="view-menu-circle" data-aos="fade-up" data-aos-delay="200" (click)="scrollToMenu()">
+    View Menu <i class="fa-solid fa-arrow-right"></i>
+  </button>
+
+  <div
+    class="hero-image-wrapper"
+    data-aos="fade-up"
+    data-aos-delay="350"
+    [style.transform]="'translateY(' + heroParallaxOffset() + 'px)'"
+  >
+    <img src="./pizza.png" alt="Pizza" />
+  </div>
+</section>
+<hr>
+
+<!-- ===== POPULAR DISHES ===== -->
+<section class="popular-section" id="menu-section">
+
+  <div class="popular-header" data-aos="fade-up">
+    <h2>Popular Dishes</h2>
+  </div>
+
+  <div class="category-pills" data-aos="fade-up" data-aos-delay="100">
+    <button class="pill" [class.active]="activeCategory() === 'all'" (click)="setActiveCategory('all')">
+      Among all categories
+    </button>
+    @for (category of categories(); track category.id) {
+      <button class="pill" [class.active]="activeCategory() === category.id" (click)="setActiveCategory(category.id)">
+        {{ category.name }}
+      </button>
+    }
+  </div>
 
   @if (isLoading()) {
-    <div class="loading-state">
-      <i class="fa-solid fa-spinner fa-spin"></i> Loading menu...
-    </div>
-  } @else if (errorMessage()) {
-    <div class="error-state">{{ errorMessage() }}</div>
-  } @else if (categories().length === 0) {
+    <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+  } @else if (popularItems().length === 0) {
     <div class="empty-state">
       <i class="fa-solid fa-utensils"></i>
-      <p>Menyuda hələ heç bir məhsul yoxdur.</p>
+      <p>Heç bir nəticə tapılmadı.</p>
     </div>
   } @else {
-    @for (category of categories(); track category.id) {
-      <section class="category-section">
-        <h2 class="category-title">{{ category.name }}</h2>
+    <div class="popular-grid">
+      @for (item of popularItems(); track item.id; let i = $index) {
+        <div
+          class="popular-card"
+          [class.tall]="i === 0 || i === 3"
+          data-aos="fade-up"
+          [attr.data-aos-delay]="i * 100"
+          (click)="goToDish(item)"
+        >
+          <div class="popular-image-wrapper">
+            @if (item.image_url) {
+              <img [src]="item.image_url" [alt]="item.name" />
+            } @else {
+              <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
+            }
+          </div>
 
-        <div class="items-grid">
-          @for (item of category.items; track item.id) {
-            <div class="item-card">
-              <div class="item-image-wrapper">
-                @if (item.image_url) {
-                  <img [src]="item.image_url" [alt]="item.name" />
-                } @else {
-                  <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
-                }
+          <div class="popular-info">
+            <h3>{{ item.name }}</h3>
+            @if (item.description) {
+              <p>{{ item.description }}</p>
+            }
+            <span class="choose-link">
+              Choose <i class="fa-solid fa-arrow-up-right"></i>
+            </span>
+          </div>
 
-                @if (item.is_spicy) {
-                  <span class="tag-badge tag-spicy"><i class="fa-solid fa-pepper-hot"></i></span>
-                }
-              </div>
+          <button class="quick-add-btn" (click)="quickAddToCart($event, item)">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      }
+    </div>
+  }
 
-              <div class="item-info">
-                <h3>{{ item.name }}</h3>
-                @if (item.description) {
-                  <p class="item-desc">{{ item.description }}</p>
-                }
+</section>
 
-                <div class="item-footer">
-                  <span class="item-price">${{ item.base_price }}</span>
-                  <button class="add-btn" (click)="addToCart(item)">
-                    <i class="fa-solid fa-plus"></i>
-                  </button>
-                </div>
+<!-- ===== TAM MENYU ===== -->
+<main class="home-main">
+
+  @if (errorMessage()) {
+    <div class="error-state">{{ errorMessage() }}</div>
+  }
+
+  @for (category of categories(); track category.id) {
+    <section class="category-section" data-aos="fade-up">
+      <h2 class="category-title">{{ category.name }}</h2>
+
+      <div class="items-grid">
+        @for (item of category.items; track item.id; let i = $index) {
+          <div
+            class="item-card"
+            data-aos="fade-up"
+            [attr.data-aos-delay]="(i % 4) * 80"
+            (click)="goToDish(item)"
+          >
+            <div class="item-image-wrapper">
+              @if (item.image_url) {
+                <img [src]="item.image_url" [alt]="item.name" />
+              } @else {
+                <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
+              }
+
+              @if (item.is_spicy) {
+                <span class="tag-badge tag-spicy"><i class="fa-solid fa-pepper-hot"></i></span>
+              }
+            </div>
+
+            <div class="item-info">
+              <h3>{{ item.name }}</h3>
+              <div class="item-footer">
+                <span class="item-price">${{ item.base_price }}</span>
+                <button class="add-btn" (click)="quickAddToCart($event, item)">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
               </div>
             </div>
-          }
-        </div>
-      </section>
-    }
+          </div>
+        }
+      </div>
+    </section>
   }
 
 </main>
