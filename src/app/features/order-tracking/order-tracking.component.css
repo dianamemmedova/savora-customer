@@ -1,37 +1,52 @@
 .tracking-page {
-  max-width: 600px;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 120px 24px 80px;
+  background: var(--bg-cream);
+  min-height: 100vh;
 }
 
 .loading-state, .error-state {
   text-align: center;
-  padding: 80px 24px;
+  padding: 100px 24px;
   color: var(--text-secondary);
 }
 
 .tracking-card {
   background: var(--surface);
-  border-radius: 24px;
-  padding: 32px;
+  border-radius: 28px;
+  padding: 36px;
   box-shadow: var(--shadow-soft);
 }
 
+/* ===== Header ===== */
+
 .order-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+}
+
+.order-eyebrow {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
 }
 
 .order-number {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  font-weight: 600;
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .order-status-badge {
-  padding: 6px 16px;
+  padding: 7px 18px;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 700;
@@ -44,10 +59,12 @@
 .status-completed { background: rgba(27, 156, 110, 0.15); color: var(--success); }
 .status-cancelled { background: rgba(211, 47, 47, 0.15); color: var(--danger); }
 
+/* ===== Stepper ===== */
+
 .stepper {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
 
 .step {
@@ -59,29 +76,30 @@
 }
 
 .step-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--surface-alt);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  transition: all 0.3s ease;
+  font-size: 16px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .step.active .step-icon {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: #fff;
 }
 
 .step.current .step-icon {
-  box-shadow: 0 0 0 4px rgba(210, 105, 30, 0.2);
+  box-shadow: 0 0 0 5px rgba(210, 105, 30, 0.18);
+  transform: scale(1.08);
 }
 
 .step-label {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-secondary);
   text-align: center;
@@ -95,23 +113,52 @@
   flex: 1;
   height: 2px;
   background: var(--surface-alt);
-  margin-top: 19px;
-  transition: background 0.3s ease;
+  margin-top: 21px;
+  transition: background 0.4s ease;
 }
 
 .step-connector.active {
   background: var(--primary);
 }
 
+/* ===== Live Note ===== */
+
+.live-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ===== Order Summary ===== */
+
 .order-summary {
   border-top: 1px solid #EDE3D6;
-  padding-top: 20px;
+  padding-top: 24px;
 }
 
 .order-summary h3 {
-  font-size: 15px;
+  font-family: var(--font-display);
+  font-size: 16px;
   font-weight: 700;
-  margin: 0 0 16px;
+  margin: 0 0 18px;
+  color: var(--text-primary);
 }
 
 .summary-row {
@@ -119,33 +166,58 @@
   justify-content: space-between;
   font-size: 13.5px;
   color: var(--text-secondary);
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 }
 
 .summary-divider {
   height: 1px;
   background: #EDE3D6;
-  margin: 12px 0;
+  margin: 14px 0;
 }
 
 .total-row {
+  font-family: var(--font-display);
   font-weight: 700;
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: 16px;
   border-top: 1px solid #EDE3D6;
-  padding-top: 12px;
-  margin-top: 4px;
+  padding-top: 14px;
+  margin-top: 6px;
 }
 
+/* ===== Back Button ===== */
+
 .back-btn {
-  display: block;
-  text-align: center;
-  margin-top: 24px;
-  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 15px;
   background: var(--surface-alt);
   border-radius: var(--radius-full);
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+@media (max-width: 500px) {
+  .tracking-card {
+    padding: 24px;
+  }
+  .step-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  .step-label {
+    font-size: 9px;
+  }
 }

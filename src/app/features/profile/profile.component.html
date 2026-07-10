@@ -1,8 +1,8 @@
-<app-navbar></app-navbar>
+<app-navbar [isDark]="false"></app-navbar>
 
 <main class="profile-page">
 
-  <section class="profile-header">
+  <section class="profile-header" data-aos="fade-up">
     <div class="avatar-circle">
       {{ authService.currentUser()?.fullName?.charAt(0) ?? '?' }}
     </div>
@@ -19,7 +19,7 @@
     </div>
   </section>
 
-  <div class="tab-switcher">
+  <div class="tab-switcher" data-aos="fade-up" data-aos-delay="100">
     <button [class.active]="activeTab() === 'active'" (click)="setTab('active')">Active Orders</button>
     <button [class.active]="activeTab() === 'past'" (click)="setTab('past')">Past Orders</button>
   </div>
@@ -30,15 +30,20 @@
 
     @if (activeTab() === 'active') {
       @if (activeOrders().length === 0) {
-        <div class="empty-state">
+        <div class="empty-state" data-aos="fade-up">
           <i class="fa-solid fa-receipt"></i>
           <p>Hazırda aktiv sifarişiniz yoxdur.</p>
           <a routerLink="/home" class="browse-link">Browse Menu</a>
         </div>
       } @else {
         <div class="orders-list">
-          @for (order of activeOrders(); track order.id) {
-            <a [routerLink]="['/order-tracking', order.id]" class="order-row">
+          @for (order of activeOrders(); track order.id; let i = $index) {
+           <a 
+              [routerLink]="['/order-tracking', order.id]"
+              class="order-row"
+              data-aos="fade-up"
+              [attr.data-aos-delay]="i * 60"
+            >
               <div class="order-row-info">
                 <span class="order-number">Order #{{ order.order_number }}</span>
                 <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
@@ -52,14 +57,14 @@
 
     @if (activeTab() === 'past') {
       @if (pastOrders().length === 0) {
-        <div class="empty-state">
+        <div class="empty-state" data-aos="fade-up">
           <i class="fa-solid fa-clock-rotate-left"></i>
           <p>Keçmiş sifarişiniz yoxdur.</p>
         </div>
       } @else {
         <div class="orders-list">
-          @for (order of pastOrders(); track order.id) {
-            <div class="order-row past-order">
+          @for (order of pastOrders(); track order.id; let i = $index) {
+            <div class="order-row past-order" data-aos="fade-up" [attr.data-aos-delay]="i * 60">
               <div class="order-row-info">
                 <span class="order-number">Order #{{ order.order_number }}</span>
                 <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
@@ -81,7 +86,7 @@
 
   }
 
-  <button class="logout-btn" (click)="logout()">
+  <button class="logout-btn" data-aos="fade-up" (click)="logout()">
     <i class="fa-solid fa-right-from-bracket"></i> Logout
   </button>
 

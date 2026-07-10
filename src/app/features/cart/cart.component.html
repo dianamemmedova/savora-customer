@@ -1,19 +1,18 @@
-<app-navbar></app-navbar>
+<app-navbar [isDark]="true"></app-navbar>
 
 <main class="cart-page">
 
-  <h1 class="page-title">Your Cart</h1>
-
   @if (cartService.items().length === 0) {
-    <div class="empty-cart">
+    <div class="empty-cart" data-aos="fade-up">
       <i class="fa-solid fa-bag-shopping"></i>
       <p>Səbətiniz boşdur.</p>
+      <a routerLink="/home" class="browse-link">Browse Menu</a>
     </div>
   } @else {
 
     <div class="cart-layout">
 
-      <div class="cart-items-column">
+      <div class="cart-items-column" data-aos="fade-up">
         @for (item of cartService.items(); track item.menuItemId) {
           <div class="cart-item-row">
             <img [src]="item.imageUrl" [alt]="item.name" class="cart-item-image" />
@@ -38,7 +37,7 @@
         }
       </div>
 
-      <aside class="checkout-panel">
+      <aside class="checkout-panel" data-aos="fade-up" data-aos-delay="100">
 
         <h3>Order Type</h3>
         <div class="order-type-toggle">
