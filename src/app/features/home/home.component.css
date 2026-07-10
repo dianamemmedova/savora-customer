@@ -510,9 +510,7 @@
 
 .popular-card {
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(245, 240, 232, 0.08);
-  border-radius: 20px;
+  background: var(--bg-dark);
   padding: 14px;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -528,7 +526,6 @@
 .popular-image-wrapper {
   width: 100%;
   aspect-ratio: 4 / 5;
-  border-radius: 14px;
   overflow: hidden;
   margin-bottom: 16px;
   background: rgba(255, 255, 255, 0.03);
