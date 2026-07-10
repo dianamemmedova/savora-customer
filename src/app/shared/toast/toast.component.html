@@ -1,0 +1,8 @@
+<div class="toast-stack">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div class="toast-item">
+      <i [class]="toast.icon"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+  }
+</div>

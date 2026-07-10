@@ -1,7 +1,7 @@
 // cart.component.ts
 import { Component, inject, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { CartService } from '../../core/services/cart.service';
 import { OrdersService } from '../../core/services/orders.service';
@@ -11,7 +11,7 @@ const RESTAURANT_ID = 'e46573f2-ace7-4946-852f-d0ce35060a35'; // Sənin test res
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [NavbarComponent, FormsModule],
+  imports: [NavbarComponent, FormsModule , RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })

@@ -1,5 +1,5 @@
-// cart.service.ts
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { ToastService } from '../../core/services/toast.service';
 
 export interface CartItem {
   menuItemId: string;
@@ -14,6 +14,8 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
+  private toastService = inject(ToastService);
+
   items = signal<CartItem[]>([]);
 
   totalItems = computed(() => this.items().reduce((sum, item) => sum + item.quantity, 0));
@@ -29,6 +31,8 @@ export class CartService {
     } else {
       this.items.update(items => [...items, { ...item, quantity }]);
     }
+
+    this.toastService.show(`${item.name} səbətə əlavə olundu`, 'fa-solid fa-cart-shopping');
   }
 
   removeItem(menuItemId: string) {

@@ -1,6 +1,7 @@
-<app-navbar [isDark]="false"></app-navbar>
+<app-navbar [isDark]="true"></app-navbar>
 
-<main class="profile-page">
+<div class="completed">
+  <main class="profile-page">
 
   <section class="profile-header" data-aos="fade-up">
     <div class="avatar-circle">
@@ -38,14 +39,14 @@
       } @else {
         <div class="orders-list">
           @for (order of activeOrders(); track order.id; let i = $index) {
-           <a 
+           <a
               [routerLink]="['/order-tracking', order.id]"
               class="order-row"
               data-aos="fade-up"
               [attr.data-aos-delay]="i * 60"
             >
               <div class="order-row-info">
-                <span class="order-number">Order #{{ order.order_number }}</span>
+                <span class="order-number">New Order</span>
                 <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
               </div>
               <span class="status-badge" [class]="'status-' + order.status">{{ order.status }}</span>
@@ -66,7 +67,7 @@
           @for (order of pastOrders(); track order.id; let i = $index) {
             <div class="order-row past-order" data-aos="fade-up" [attr.data-aos-delay]="i * 60">
               <div class="order-row-info">
-                <span class="order-number">Order #{{ order.order_number }}</span>
+                <span class="order-number">Completed Order</span>
                 <span class="order-meta">{{ order.order_type }} • ${{ order.total_amount }}</span>
               </div>
 
@@ -91,8 +92,8 @@
   </button>
 
 </main>
+</div>
 
-<!-- Rəy Yazma Modalı -->
 @if (reviewingOrderId()) {
   <div class="modal-backdrop" (click)="closeReviewForm()">
     <div class="modal-card" (click)="$event.stopPropagation()">

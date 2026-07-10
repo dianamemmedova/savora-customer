@@ -7,7 +7,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { MasonryItemDirective } from './masonry-item.directive';
 import { FooterComponent } from '../footer/footer.component';
 import { ActivatedRoute } from '@angular/router';
-
+import { ToastComponent } from '../../shared/toast/toast.component';
 export interface BrandChef {
   name: string;
   title: string;
@@ -34,7 +34,7 @@ export interface ContactInfo {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, MasonryItemDirective , FooterComponent],
+  imports: [NavbarComponent, MasonryItemDirective , FooterComponent , ToastComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
