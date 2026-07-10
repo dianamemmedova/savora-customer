@@ -3,17 +3,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-cream);
+  background: var(--bg-dark);
   padding: 24px;
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(245, 240, 232, 0.08);
   border-radius: 24px;
   padding: 40px;
-  box-shadow: var(--shadow-soft);
 }
 
 .auth-logo {
@@ -22,31 +22,32 @@
 }
 
 .logo-text {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
   font-size: 32px;
-  font-weight: 800;
-  color: var(--primary);
+  font-weight: 700;
+  color: var(--text-on-dark);
 }
 
 .logo-tagline {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-on-dark-secondary);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin: 4px 0 0;
 }
 
 .auth-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
   margin: 0 0 8px;
+  color: var(--text-on-dark);
 }
 
 .auth-subtitle {
   text-align: center;
-  color: var(--text-secondary);
+  color: var(--text-on-dark-secondary);
   font-size: 14px;
   margin: 0 0 28px;
 }
@@ -62,21 +63,28 @@
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 6px;
-  color: var(--text-secondary);
+  color: var(--text-on-dark-secondary);
 }
 
 .form-field input {
   width: 100%;
   padding: 13px 16px;
-  border: 1.5px solid #EDE3D6;
+  border: 1.5px solid rgba(245, 240, 232, 0.15);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 14px;
   font-size: 14px;
   outline: none;
+  color: var(--text-on-dark);
   transition: border-color 0.2s ease;
 }
 
+.form-field input::placeholder {
+  color: var(--text-on-dark-secondary);
+  opacity: 0.5;
+}
+
 .form-field input:focus {
-  border-color: var(--primary);
+  border-color: var(--amber);
 }
 
 .error-text {
@@ -86,8 +94,8 @@
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #ffffff;
+  background: var(--amber);
+  color: var(--bg-dark);
   border: none;
   padding: 15px;
   border-radius: var(--radius-full);
@@ -114,12 +122,12 @@
 .auth-footer {
   text-align: center;
   font-size: 13.5px;
-  color: var(--text-secondary);
+  color: var(--text-on-dark-secondary);
   margin-top: 24px;
 }
 
 .auth-footer a {
-  color: var(--primary);
+  color: var(--amber);
   font-weight: 600;
   text-decoration: none;
 }
