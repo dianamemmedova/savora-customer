@@ -5,6 +5,7 @@ import { MenuService, MenuCategory, MenuItem } from '../../core/services/menu.se
 import { CartService } from '../../core/services/cart.service';
 import { debounceTime, Subject } from 'rxjs';
 import { MasonryItemDirective } from './masonry-item.directive';
+import { FooterComponent } from '../footer/footer.component';
 
 export interface BrandChef {
   name: string;
@@ -32,7 +33,7 @@ export interface ContactInfo {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, MasonryItemDirective],
+  imports: [NavbarComponent, MasonryItemDirective , FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
 
   brandChef = signal<BrandChef>({
     name: 'Polyansky Maxim',
-    title: 'Brand - Chef of Mamma Mia Restaurant',
+    title: 'Brand - Chef of Savora Restaurant',
     paragraphs: [
       'Maxim is a real professional, dedicated to his work. Despite his high and recognized skill, he constantly improves his skills, discovering new unique facets of flavors in seemingly familiar dishes. Regular internships allow Maxim to discover all the new secrets of cooking Italian cuisine.',
       'Since 2012, he has become the brand chef of three restaurants: La Province, La Prima, La Panorama, since 2013, the brand chef of the Gourmet-Alliance. Regular internships in restaurants and hotels in Piedmont, Tuscany and Sicily allow you to discover more and more secrets of cooking Italian cuisine.'
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
 
   contactInfo = signal<ContactInfo>({
     phone: '7 (912) 32 43 546',
-    email: 'info@mammamia.ru',
+    email: 'info@savora.ru',
     workingHoursLines: [
       'The restaurant is open from 10:00 to 23:00',
       'Online orders are accepted around the clock'

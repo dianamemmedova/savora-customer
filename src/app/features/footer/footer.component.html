@@ -1,0 +1,43 @@
+<footer class="footer">
+
+  <div class="footer-top" data-aos="fade-up">
+
+    <div class="footer-brand">
+      <h2 class="footer-logo">{{ footerData().brandName }}</h2>
+      <p class="footer-tagline">{{ footerData().tagline }}</p>
+
+      <div class="footer-socials">
+        @for (social of footerData().socialLinks; track social.label) {
+          <a [href]="social.url" [attr.aria-label]="social.label" class="footer-social-icon">
+            <i [class]="social.icon"></i>
+          </a>
+        }
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      @for (link of footerData().quickLinks; track link.label) {
+        <a [routerLink]="link.path">{{ link.label }}</a>
+      }
+    </div>
+
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <p><i class="fa-solid fa-phone"></i> {{ footerData().phone }}</p>
+      <p><i class="fa-solid fa-envelope"></i> {{ footerData().email }}</p>
+      <p><i class="fa-solid fa-location-dot"></i> {{ footerData().address }}</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Working Hours</h3>
+      <p>{{ footerData().workingHours }}</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear }} {{ footerData().brandName }}. {{ footerData().copyrightText }}</p>
+  </div>
+
+</footer>
