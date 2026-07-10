@@ -228,7 +228,6 @@
 .menu-card-image-wrapper {
   width: 100%;
   aspect-ratio: 3 / 4;
-  border-radius: 16px;
   overflow: hidden;
   margin-bottom: 16px;
 }
@@ -309,12 +308,6 @@
 
 /* ===== TAM MENYU BÖLMƏSİ ===== */
 
-.home-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 24px 80px;
-  background: var(--bg-cream);
-}
 
 .loading-state, .error-state {
   text-align: center;
@@ -322,16 +315,7 @@
   color: var(--text-secondary);
 }
 
-.category-section {
-  margin-bottom: 48px;
-}
 
-.category-title {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  margin: 0 0 24px;
-}
 
 .items-grid {
   display: grid;
@@ -531,9 +515,6 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* Şəkildəki kimi hündürlüklərin dəyişməsi üçün kartların
-   şəkil aspect-ratio-sunu növbələşdiririk. Real grid-row span
-   isə masonry-item.directive.ts tərəfindən JS ilə dinamik təyin olunur */
 .popular-card:nth-child(4n+1) .popular-image-wrapper { aspect-ratio: 3 / 4; }
 .popular-card:nth-child(4n+2) .popular-image-wrapper { aspect-ratio: 1 / 1; }
 .popular-card:nth-child(4n+3) .popular-image-wrapper { aspect-ratio: 4 / 5; }
