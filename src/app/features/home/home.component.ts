@@ -98,14 +98,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loadFullMenu();
     this.route.fragment.subscribe(fragment => {
-      if (fragment === 'menu-section') {
+      if (fragment) {
         setTimeout(() => {
-          this.scrollToMenu();
-          this.clearFragment();
-        }, 0);
-      } else if (fragment === 'popular-section') {
-        setTimeout(() => {
-          this.scrollToPopular();
+          document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth' });
           this.clearFragment();
         }, 0);
       }

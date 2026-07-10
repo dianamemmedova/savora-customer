@@ -59,7 +59,7 @@ export class AuthService {
     localStorage.removeItem('savora_user');
     this.token.set(null);
     this.currentUser.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   getAuthHeaders() {

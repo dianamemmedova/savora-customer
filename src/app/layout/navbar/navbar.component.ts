@@ -1,4 +1,4 @@
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, output, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
@@ -18,6 +18,16 @@ export class NavbarComponent {
   isDark = input(false);
   searchQuery = '';
   searchChanged = output<string>();
+
+  isMenuOpen = signal(false);
+
+  toggleMenu() {
+    this.isMenuOpen.update(open => !open);
+  }
+
+  closeMenu() {
+    this.isMenuOpen.set(false);
+  }
 
   onSearchInput() {
     this.searchChanged.emit(this.searchQuery);

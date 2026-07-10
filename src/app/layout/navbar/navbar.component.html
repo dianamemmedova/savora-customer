@@ -1,8 +1,31 @@
 <header class="navbar" [class.navbar-dark]="isDark()">
   <div class="navbar-left">
-    <button class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
-     <a routerLink="/home" fragment="menu-section" class="nav-text-link">Menu</a>
-     <a routerLink="/home" fragment="popular-section" class="nav-text-link">Specials</a>
+
+    <div class="menu-dropdown-wrapper">
+      <button class="hamburger-btn" (click)="toggleMenu()">
+        <i class="fa-solid" [class.fa-bars]="!isMenuOpen()" [class.fa-xmark]="isMenuOpen()"></i>
+      </button>
+
+      @if (isMenuOpen()) {
+        <div class="dropdown-backdrop" (click)="closeMenu()"></div>
+        <nav class="dropdown-panel">
+          <a routerLink="/home" class="dropdown-link" (click)="closeMenu()">Restaurant</a>
+          <a routerLink="/home" fragment="menu-section" class="dropdown-link" (click)="closeMenu()">Menu</a>
+          <a routerLink="/home" fragment="popular-section" class="dropdown-link" (click)="closeMenu()">Specials</a>
+          <a routerLink="/home" fragment="chef-section" class="dropdown-link" (click)="closeMenu()">Our Chef</a>
+          <a routerLink="/home" fragment="contacts-section" class="dropdown-link" (click)="closeMenu()">Contacts</a>
+          <a routerLink="/cart" class="dropdown-link" (click)="closeMenu()">
+            Basket
+            @if (cartService.totalItems() > 0) {
+              <span class="dropdown-count">{{ cartService.totalItems() }}</span>
+            }
+          </a>
+        </nav>
+      }
+    </div>
+
+    <a routerLink="/home" fragment="menu-section" class="nav-text-link inline-link">Menu</a>
+    <a routerLink="/home" fragment="popular-section" class="nav-text-link inline-link">Specials</a>
   </div>
 
   <div class="navbar-center">
@@ -11,14 +34,20 @@
   </div>
 
   <div class="navbar-right">
-    <a routerLink="/profile" class="nav-text-link">
-      <i class="fa-regular fa-user"></i> My Account
-    </a>
-    <a routerLink="/cart" class="nav-text-link">
-      <i class="fa-solid fa-bag-shopping"></i> Basket
+    <a routerLink="/cart" class="nav-text-link inline-link">
+      <i class="fa-solid fa-bag-shopping"></i> <span>Basket</span>
       @if (cartService.totalItems() > 0) {
         <span class="cart-count">{{ cartService.totalItems() }}</span>
       }
     </a>
+    @if (authService.currentUser()) {
+      <a routerLink="/profile" class="nav-text-link account-link">
+        <i class="fa-regular fa-user"></i> <span class="account-label">My Account</span>
+      </a>
+    } @else {
+      <a routerLink="/login" class="nav-text-link account-link">
+        <i class="fa-regular fa-user"></i> <span class="account-label">Sign In</span>
+      </a>
+    }
   </div>
 </header>
