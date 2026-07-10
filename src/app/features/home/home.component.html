@@ -200,3 +200,87 @@
   }
 
 </section>
+
+<section class="chef-section">
+
+  <h2 class="chef-heading reveal-title" data-aos="fade-up">
+    <span class="reveal-line"><span class="reveal-text">Our brand - chef</span></span>
+  </h2>
+
+  <div class="chef-content">
+
+    <div class="chef-images" data-aos="fade-up" data-aos-delay="150">
+      <div class="chef-image-back" data-aos="zoom-out-right">
+        <img [src]="brandChef().backgroundImage" alt="Restoran interyeri" />
+      </div>
+      <div class="chef-image-main" data-aos="zoom-out-left" data-aos-delay="500">
+        <img [src]="brandChef().mainImage" [alt]="brandChef().name" />
+      </div>
+    </div>
+
+    <div class="chef-info">
+      <h3 class="chef-name reveal-title">
+        <span class="reveal-line"><span class="reveal-text">{{ brandChef().name }}</span></span>
+      </h3>
+
+      <p class="chef-role" data-aos="fade-up" data-aos-delay="200">{{ brandChef().title }}</p>
+
+      @for (paragraph of brandChef().paragraphs; track paragraph; let i = $index) {
+        <p class="chef-desc" data-aos="fade-up" [attr.data-aos-delay]="300 + i * 100">{{ paragraph }}</p>
+      }
+
+      <button class="chef-read-more" data-aos="fade-up" data-aos-delay="500" (click)="goToChefPage()">
+        Read more <i class="fa-solid fa-arrow-up-right"></i>
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="contacts-section">
+
+  <h2 class="contacts-heading reveal-title" data-aos="fade-up">
+    <span class="reveal-line"><span class="reveal-text">Contacts</span></span>
+  </h2>
+
+  <div class="contacts-columns">
+
+    <div class="contacts-col" data-aos="fade-up" data-aos-delay="100">
+      <h3><i class="fa-solid fa-paper-plane"></i> For any questions</h3>
+      <p>Phone number: {{ contactInfo().phone }}</p>
+      <p>Our mail: {{ contactInfo().email }}</p>
+    </div>
+
+    <div class="contacts-col" data-aos="fade-up" data-aos-delay="200">
+      <h3><i class="fa-solid fa-clock"></i> Working hours</h3>
+      @for (line of contactInfo().workingHoursLines; track line) {
+        <p>{{ line }}</p>
+      }
+    </div>
+
+    <div class="contacts-col" data-aos="fade-up" data-aos-delay="300">
+      <h3><i class="fa-solid fa-location-dot"></i> Our location</h3>
+      @for (location of contactInfo().locations; track location.address) {
+        <p>{{ location.address }}</p>
+      }
+    </div>
+
+  </div>
+
+  <div class="contacts-map" data-aos="fade-up" data-aos-delay="400">
+    <img [src]="contactInfo().mapImage" alt="Xəritə" />
+    @for (location of contactInfo().locations; track location.address) {
+      <span
+        class="map-pin"
+        [style.left.%]="location.xPercent"
+        [style.top.%]="location.yPercent"
+        [title]="location.address"
+      >
+        <i class="fa-solid fa-location-dot"></i>
+      </span>
+    }
+  </div>
+
+</section>

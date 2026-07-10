@@ -2,16 +2,15 @@
 
 .hero {
   position: relative;
-  top: 80px;
-  min-height: 650px;
+  min-height: 600px;
   background: var(--bg-dark);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 70px;
-  margin-bottom: 100px;
+  padding-top: 20px;
+  margin-top: 90px;
 }
 
 .hero-text {
@@ -459,15 +458,16 @@
   gap: 8px;
   color: var(--text-on-dark);
   text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 600;
   border-bottom: 1px solid rgba(245, 240, 232, 0.4);
   padding-bottom: 2px;
   background: none;
-  border: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
   cursor: pointer;
   font-family: inherit;
-  line-height: 1.7;
 }
 
 .category-pills {
@@ -511,7 +511,9 @@
 
 .popular-card {
   cursor: pointer;
-  background-color: transparent;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  border-radius: 20px;
   padding: 14px;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -527,6 +529,7 @@
 .popular-image-wrapper {
   width: 100%;
   aspect-ratio: 4 / 5;
+  border-radius: 14px;
   overflow: hidden;
   margin-bottom: 16px;
   background: rgba(255, 255, 255, 0.03);
@@ -636,6 +639,206 @@
   font-weight: 600;
 }
 
+/* ===== OUR BRAND - CHEF ===== */
+
+.chef-section {
+  background: var(--bg-dark);
+  padding: 100px 32px 120px;
+}
+
+.chef-heading {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  text-align: center;
+  margin: 0 0 64px;
+}
+
+.chef-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.chef-images {
+  position: relative;
+  width: 100%;
+}
+
+.chef-image-back {
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 55%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.chef-image-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chef-image-main {
+  position: relative;
+  width: 80%;
+  margin-left: auto;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+.chef-image-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chef-signature {
+  position: absolute;
+  bottom: 24px;
+  right: 8%;
+  width: 140px;
+  z-index: 3;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.chef-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chef-name {
+  font-size: 30px;
+  margin: 0 0 8px;
+}
+
+.chef-role {
+  font-size: 13.5px;
+  color: var(--amber);
+  font-weight: 600;
+  margin: 0 0 28px;
+}
+
+.chef-desc {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--text-on-dark-secondary);
+  margin: 0 0 20px;
+}
+
+.chef-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: var(--text-on-dark);
+  font-size: 17px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  cursor: pointer;
+  width: fit-content;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+.chef-read-more:hover {
+  border-color: var(--text-on-dark);
+  color: var(--amber);
+}
+
+/* ===== CONTACTS ===== */
+
+.contacts-section {
+  background: var(--bg-dark);
+  padding: 100px 32px 100px;
+}
+
+.contacts-heading {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  text-align: center;
+  margin: 0 0 56px;
+}
+
+.contacts-columns {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.contacts-col h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--text-on-dark);
+  margin: 0 0 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.15);
+}
+
+.contacts-col h3 i {
+  color: var(--amber);
+  font-size: 14px;
+}
+
+.contacts-col p {
+  font-size: 13.5px;
+  color: var(--text-on-dark-secondary);
+  line-height: 1.9;
+  margin: 0 0 4px;
+}
+
+.contacts-map {
+  position: relative;
+  max-width: 1200px;
+  margin: 20px auto;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+
+}
+
+.contacts-map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(20, 18, 15, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-on-dark);
+  font-size: 13px;
+  cursor: pointer;
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 900px) {
@@ -649,6 +852,20 @@
   .menu-cards-row { grid-template-columns: repeat(2, 1fr); }
 
   .popular-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .chef-content { grid-template-columns: 1fr; gap: 40px; }
+  .chef-heading { font-size: 32px; margin-bottom: 40px; }
+  .chef-images { height: 420px; }
+  .chef-image-main { width: 70%; }
+
+  .chef-content { grid-template-columns: 1fr; gap: 40px; }
+  .chef-heading { font-size: 32px; margin-bottom: 40px; }
+  .chef-images { height: 420px; }
+  .chef-image-main { width: 70%; }
+
+  .contacts-heading { font-size: 32px; margin-bottom: 40px; }
+  .contacts-columns { grid-template-columns: 1fr; gap: 32px; }
+  .contacts-map { aspect-ratio: 4 / 3; }
 }
 
 @media (max-width: 600px) {

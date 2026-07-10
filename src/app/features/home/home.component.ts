@@ -6,6 +6,28 @@ import { CartService } from '../../core/services/cart.service';
 import { debounceTime, Subject } from 'rxjs';
 import { MasonryItemDirective } from './masonry-item.directive';
 
+export interface BrandChef {
+  name: string;
+  title: string;
+  paragraphs: string[];
+  mainImage: string;
+  backgroundImage: string;
+  signatureImage: string;
+}
+export interface ContactLocation {
+  address: string;
+  xPercent: number;
+  yPercent: number;
+}
+
+export interface ContactInfo {
+  phone: string;
+  email: string;
+  workingHoursLines: string[];
+  locations: ContactLocation[];
+  mapImage: string;
+}
+
 
 @Component({
   selector: 'app-home',
@@ -31,7 +53,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:scroll')
   onScroll() {
-    // Hero şəklinə yüngül parallax effekti - videodakı scroll hərəkətinə bənzər
     this.heroParallaxOffset.set(window.scrollY * 0.15);
   }
 
@@ -43,6 +64,32 @@ export class HomeComponent implements OnInit {
     }
     const cat = this.categories().find(c => c.id === this.activeCategory());
     return cat ? cat.items.slice(0, 6) : [];
+  });
+
+  brandChef = signal<BrandChef>({
+    name: 'Polyansky Maxim',
+    title: 'Brand - Chef of Mamma Mia Restaurant',
+    paragraphs: [
+      'Maxim is a real professional, dedicated to his work. Despite his high and recognized skill, he constantly improves his skills, discovering new unique facets of flavors in seemingly familiar dishes. Regular internships allow Maxim to discover all the new secrets of cooking Italian cuisine.',
+      'Since 2012, he has become the brand chef of three restaurants: La Province, La Prima, La Panorama, since 2013, the brand chef of the Gourmet-Alliance. Regular internships in restaurants and hotels in Piedmont, Tuscany and Sicily allow you to discover more and more secrets of cooking Italian cuisine.'
+    ],
+    mainImage: './chef-main.jpg',
+    backgroundImage: './chef-restaurant.jpg',
+    signatureImage: './chef-signature.png'
+  });
+
+  contactInfo = signal<ContactInfo>({
+    phone: '7 (912) 32 43 546',
+    email: 'info@mammamia.ru',
+    workingHoursLines: [
+      'The restaurant is open from 10:00 to 23:00',
+      'Online orders are accepted around the clock'
+    ],
+    locations: [
+      { address: 'st. Vosstaniya, 19, Saint Petersburg', xPercent: 52, yPercent: 62 },
+      { address: 'st. Zhukovskogo, 35, St. Petersburg', xPercent: 42, yPercent: 74 }
+    ],
+    mapImage: './map-dark.png'
   });
 
   ngOnInit() {
@@ -65,7 +112,8 @@ export class HomeComponent implements OnInit {
   onSearch(query: string) {
     this.searchSubject.next(query);
   }
-    categoryCards = computed(() => {
+
+  categoryCards = computed(() => {
     return this.categories().map(cat => ({
       id: cat.id,
       name: cat.name,
@@ -90,14 +138,14 @@ export class HomeComponent implements OnInit {
   }
 
   setActiveCategory(id: string) {
-  const scrollPos = window.scrollY;   // Hazırkı mövqeyi yadda saxla
-  this.activeCategory.set(id);
+    const scrollPos = window.scrollY;
+    this.activeCategory.set(id);
 
-  // Angular-ın DOM-u yeniləməsini gözlə, sonra mövqeyi geri qaytar
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: scrollPos });
-  });
-}
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollPos });
+    });
+  }
+
   goToDish(item: MenuItem) {
     this.router.navigate(['/dish', item.id]);
   }
@@ -116,15 +164,20 @@ export class HomeComponent implements OnInit {
     document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
   }
 
-     private readonly popularItemsLimit = 11;
+  goToChefPage() {
+    this.router.navigate(['/chef']);
+  }
 
-     filteredPopularItems = computed(() => {
-      const allItems = this.activeCategory() === 'all'
-        ? this.allItemsFlat()
-        : (this.categories().find(c => c.id === this.activeCategory())?.items ?? []);
-      return allItems.slice(0, this.popularItemsLimit);
-    });
-    hasMorePopularItems = computed(() => false);
+  private readonly popularItemsLimit = 11;
 
-     showMorePopular() {}
+  filteredPopularItems = computed(() => {
+    const allItems = this.activeCategory() === 'all'
+      ? this.allItemsFlat()
+      : (this.categories().find(c => c.id === this.activeCategory())?.items ?? []);
+    return allItems.slice(0, this.popularItemsLimit);
+  });
+
+  hasMorePopularItems = computed(() => false);
+
+  showMorePopular() {}
 }
