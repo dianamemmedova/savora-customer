@@ -11,15 +11,16 @@
     </p>
   </div>
 
-  <button class="view-menu-circle" data-aos="fade-up" data-aos-delay="200" (click)="scrollToMenu()">
+  <button class="view-menu-circle" data-aos="fade-left"  (click)="scrollToMenu()">
     View Menu <i class="fa-solid fa-arrow-right"></i>
   </button>
 
   <div
     class="hero-image-wrapper"
     data-aos="fade-up"
-    data-aos-delay="350"
-    [style.transform]="'translateY(' + heroParallaxOffset() + 'px)'"
+    data-aos-delay="500"
+    data-aos-anchor-placement="top-bottom"
+   
   >
     <img src="./pizza.png" alt="Pizza" />
   </div>
@@ -60,49 +61,142 @@
 </section>
 
 <!-- ===== TAM MENYU ===== -->
-<main class="home-main">
+<main class="menu-section">
+
+  <div class="menu-header" data-aos="fade-up">
+    <h2>Our Menu</h2>
+    <p>
+      We offer our guests everything that Italian cuisine is famous for: a large selection
+      of pasta dishes, pizza, fish, seafood and of course traditional Italian desserts.
+    </p>
+  </div>
 
   @if (errorMessage()) {
     <div class="error-state">{{ errorMessage() }}</div>
   }
 
-  @for (category of categories(); track category.id) {
-    <section class="category-section" data-aos="fade-up">
-      <h2 class="category-title">{{ category.name }}</h2>
+  <div class="menu-cards-row">
+    @for (card of categoryCards(); track card.id; let i = $index) {
+      <div
+        class="menu-card"
+        data-aos="fade-up"
+        [attr.data-aos-delay]="i * 100"
+        (click)="setActiveCategory(card.id); scrollToMenu()"
+      >
+        <div class="menu-card-image-wrapper">
+          @if (card.image) {
+            <img [src]="card.image" [alt]="card.name" />
+          } @else {
+            <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
+          }
+        </div>
 
-      <div class="items-grid">
-        @for (item of category.items; track item.id; let i = $index) {
-          <div
-            class="item-card"
-            data-aos="fade-up"
-            [attr.data-aos-delay]="(i % 4) * 80"
-            (click)="goToDish(item)"
-          >
-            <div class="item-image-wrapper">
-              @if (item.image_url) {
-                <img [src]="item.image_url" [alt]="item.name" />
-              } @else {
-                <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
-              }
+        <div class="menu-card-footer">
+          <h3>{{ card.name }}</h3>
+          <span class="choose-link">Choose <i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
 
-              @if (item.is_spicy) {
-                <span class="tag-badge tag-spicy"><i class="fa-solid fa-pepper-hot"></i></span>
-              }
-            </div>
+        <p class="menu-card-desc">{{ card.description }}</p>
+      </div>
+    }
+  </div>
 
-            <div class="item-info">
-              <h3>{{ item.name }}</h3>
-              <div class="item-footer">
-                <span class="item-price">${{ item.base_price }}</span>
-                <button class="add-btn" (click)="quickAddToCart($event, item)">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
+  <!-- Kateqoriya seçiləndə, o kateqoriyanın bütün məhsulları burada açılır -->
+  @if (activeCategory() !== 'all') {
+    <div class="expanded-items" data-aos="fade-up">
+      @for (category of categories(); track category.id) {
+        @if (category.id === activeCategory()) {
+          <h3 class="expanded-title">{{ category.name }}</h3>
+          <div class="items-grid">
+            @for (item of category.items; track item.id) {
+              <div class="item-card" (click)="goToDish(item)">
+                <div class="item-image-wrapper">
+                  @if (item.image_url) {
+                    <img [src]="item.image_url" [alt]="item.name" />
+                  } @else {
+                    <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
+                  }
+                </div>
+                <div class="item-info">
+                  <h3>{{ item.name }}</h3>
+                  <div class="item-footer">
+                    <span class="item-price">${{ item.base_price }}</span>
+                    <button class="add-btn" (click)="quickAddToCart($event, item)">
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            }
           </div>
         }
-      </div>
-    </section>
+      }
+    </div>
   }
 
 </main>
+
+<section class="popular-section">
+
+  <div class="popular-header" data-aos="fade-up">
+    <h2>Popular dishes</h2>
+     <button class="view-all-link" (click)="scrollToMenu()">
+      View menu <i class="fa-solid fa-arrow-up-right"></i>
+    </button>
+  </div>
+
+  <div class="category-pills" data-aos="fade-up" data-aos-delay="100">
+    <button class="pill" [class.active]="activeCategory() === 'all'" (click)="setActiveCategory('all')">
+      Among all categories
+    </button>
+    @for (category of categories(); track category.id) {
+      <button
+        class="pill"
+        [class.active]="activeCategory() === category.id"
+        (click)="setActiveCategory(category.id)"
+      >
+        {{ category.name }}
+      </button>
+    }
+  </div>
+
+  @if (filteredPopularItems().length === 0) {
+    <div class="empty-state"><i class="fa-solid fa-utensils"></i><p>Heç bir nəticə tapılmadı.</p></div>
+  } @else {
+    <div class="popular-grid">
+      @for (item of filteredPopularItems(); track item.id; let i = $index) {
+         <div
+              class="popular-card"
+              appMasonryItem
+              data-aos="fade-up"
+              [attr.data-aos-delay]="(i % 6) * 80"
+              (click)="goToDish(item)"
+            >
+          <div class="popular-image-wrapper">
+            @if (item.image_url) {
+              <img [src]="item.image_url" [alt]="item.name" />
+            } @else {
+              <div class="image-placeholder"><i class="fa-solid fa-utensils"></i></div>
+            }
+          </div>
+
+          <h3>{{ item.name }}</h3>
+          @if (item.description) {
+            <p class="popular-desc">{{ item.description }}</p>
+          }
+          <span class="choose-link">Choose <i class="fa-solid fa-arrow-up-right"></i></span>
+        </div>
+      }
+    </div>
+
+    @if (hasMorePopularItems()) {
+      <div class="show-more-wrapper" data-aos="fade-up">
+        <button class="show-more-btn" (click)="showMorePopular()">
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+        <span>Show more</span>
+      </div>
+    }
+  }
+
+</section>

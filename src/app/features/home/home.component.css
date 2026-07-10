@@ -2,7 +2,8 @@
 
 .hero {
   position: relative;
-  min-height: 800px;
+  top: 80px;
+  min-height: 650px;
   background: var(--bg-dark);
   overflow: hidden;
   display: flex;
@@ -10,6 +11,7 @@
   align-items: center;
   justify-content: center;
   padding-top: 70px;
+  margin-bottom: 100px;
 }
 
 .hero-text {
@@ -64,10 +66,10 @@
   justify-content: center;
   gap: 6px;
   z-index: 3;
-  margin-top: 20px;
+  margin-top: 0;
   transition: all 0.3s ease;
   position: absolute;
-  right: 30px;
+  right: 130px;
 }
 
 .view-menu-circle:hover {
@@ -103,7 +105,7 @@
 
 .story-section {
   background: var(--bg-cream);
-  padding: 20px 32px 0px ; 
+  padding: 20px 32px 0px ;
   max-height: 140vh;
 }
 
@@ -181,20 +183,130 @@
   transition-delay: 0.15s;
 }
 
-@media (max-width: 700px) {
-  .story-header h2 {
-    font-size: 26px;
-  }
-  .story-image-wrapper {
-    height: 280px;
-  }
+/* ===== OUR MENU - Category Cards ===== */
+
+.menu-section {
+  background: var(--bg-dark);
+  padding: 100px 32px 100px;
+  margin: 40px 0;
 }
 
+.menu-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 56px;
+}
 
+.menu-header h2 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  margin: 0 0 16px;
+}
 
+.menu-header p {
+  font-size: 14px;
+  color: var(--text-on-dark-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
 
+.menu-cards-row {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
 
+.menu-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
 
+.menu-card-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.menu-card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.menu-card:hover .menu-card-image-wrapper img {
+  transform: scale(1.06);
+}
+
+.menu-card-image-wrapper .image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a2620;
+  color: rgba(255,255,255,0.2);
+  font-size: 28px;
+}
+
+.menu-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.menu-card-footer h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  margin: 0;
+}
+
+.menu-card .choose-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.menu-card-desc {
+  font-size: 12.5px;
+  color: var(--text-on-dark-secondary);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.expanded-items {
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding-top: 48px;
+  border-top: 1px solid rgba(245, 240, 232, 0.1);
+}
+
+.expanded-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  margin: 0 0 24px;
+  text-align: center;
+}
 
 /* ===== TAM MENYU BÖLMƏSİ ===== */
 
@@ -205,7 +317,7 @@
   background: var(--bg-cream);
 }
 
-.loading-state, .error-state, .empty-state {
+.loading-state, .error-state {
   text-align: center;
   padding: 60px 24px;
   color: var(--text-secondary);
@@ -316,17 +428,233 @@
   cursor: pointer;
 }
 
+/* ===== POPULAR DISHES (Masonry) ===== */
+
+.popular-section {
+  background: var(--bg-dark);
+  padding: 90px 32px 100px;
+}
+
+.popular-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.popular-header h2 {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  margin: 0;
+}
+
+.view-all-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-on-dark);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.4);
+  padding-bottom: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.7;
+}
+
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto 48px;
+}
+
+.pill {
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(245, 240, 232, 0.25);
+  background: none;
+  color: var(--text-on-dark-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.pill.active, .pill:hover {
+  background: var(--text-on-dark);
+  color: var(--bg-dark);
+  border-color: var(--text-on-dark);
+}
+
+/* Pinterest tipli masonry: CSS Grid + kiçik grid-auto-rows vahidi.
+   CSS columns-dan fərqli olaraq bu üsul HƏMİŞƏ bütün sütunları
+   soldan-sağa dərhal doldurur (balanslaşdırma problemi olmadan) */
+.popular-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 8px;
+  gap: 28px;
+}
+
+.popular-card {
+  cursor: pointer;
+  background-color: transparent;
+  padding: 14px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  align-self: start;
+}
+
+.popular-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(245, 240, 232, 0.15);
+  transform: translateY(-4px);
+}
+
+.popular-image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Şəkildəki kimi hündürlüklərin dəyişməsi üçün kartların
+   şəkil aspect-ratio-sunu növbələşdiririk. Real grid-row span
+   isə masonry-item.directive.ts tərəfindən JS ilə dinamik təyin olunur */
+.popular-card:nth-child(4n+1) .popular-image-wrapper { aspect-ratio: 3 / 4; }
+.popular-card:nth-child(4n+2) .popular-image-wrapper { aspect-ratio: 1 / 1; }
+.popular-card:nth-child(4n+3) .popular-image-wrapper { aspect-ratio: 4 / 5; }
+.popular-card:nth-child(4n)   .popular-image-wrapper { aspect-ratio: 3 / 5; }
+
+.popular-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.popular-card:hover .popular-image-wrapper img {
+  transform: scale(1.05);
+}
+
+.popular-image-wrapper .image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.15);
+  font-size: 26px;
+}
+
+.popular-card h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  margin: 0 0 6px;
+  padding: 0 6px;
+}
+
+.popular-desc {
+  font-size: 12.5px;
+  color: var(--text-on-dark-secondary);
+  line-height: 1.6;
+  margin: 0 0 12px;
+  padding: 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.popular-card .choose-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 6px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--text-on-dark-secondary);
+}
+
+.empty-state i {
+  font-size: 32px;
+  opacity: 0.3;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.show-more-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+}
+
+.show-more-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(245, 240, 232, 0.3);
+  background: none;
+  color: var(--text-on-dark);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.show-more-btn:hover {
+  background: var(--text-on-dark);
+  color: var(--bg-dark);
+}
+
+.show-more-wrapper span {
+  font-size: 12.5px;
+  color: var(--text-on-dark-secondary);
+  font-weight: 600;
+}
+
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 900px) {
   .hero-title { font-size: 34px; }
   .hero-word-italic { font-size: 28px; }
-  .popular-grid { grid-template-columns: 1fr 1fr; }
-  .popular-card.tall { grid-row: span 1; height: 280px; }
   .hero-image-wrapper { height: 300px; }
+
+  .story-header h2 { font-size: 26px; }
+  .story-image-wrapper { height: 280px; }
+
+  .menu-cards-row { grid-template-columns: repeat(2, 1fr); }
+
+  .popular-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 600px) {
-  .popular-grid { grid-template-columns: 1fr; }
   .hero { height: auto; min-height: 100vh; padding-bottom: 60px; }
+
+  .menu-cards-row { grid-template-columns: 1fr; }
+
+  .popular-grid { grid-template-columns: 1fr; }
 }

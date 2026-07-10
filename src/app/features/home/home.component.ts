@@ -4,11 +4,13 @@ import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { MenuService, MenuCategory, MenuItem } from '../../core/services/menu.service';
 import { CartService } from '../../core/services/cart.service';
 import { debounceTime, Subject } from 'rxjs';
+import { MasonryItemDirective } from './masonry-item.directive';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent],
+  imports: [NavbarComponent, MasonryItemDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -63,6 +65,15 @@ export class HomeComponent implements OnInit {
   onSearch(query: string) {
     this.searchSubject.next(query);
   }
+    categoryCards = computed(() => {
+    return this.categories().map(cat => ({
+      id: cat.id,
+      name: cat.name,
+      description: cat.items[0]?.description || `Explore our ${cat.name.toLowerCase()} selection.`,
+      image: cat.items[0]?.image_url || '',
+      firstItem: cat.items[0]
+    }));
+  });
 
   loadFullMenu() {
     this.isLoading.set(true);
@@ -79,9 +90,14 @@ export class HomeComponent implements OnInit {
   }
 
   setActiveCategory(id: string) {
-    this.activeCategory.set(id);
-  }
+  const scrollPos = window.scrollY;   // Hazırkı mövqeyi yadda saxla
+  this.activeCategory.set(id);
 
+  // Angular-ın DOM-u yeniləməsini gözlə, sonra mövqeyi geri qaytar
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: scrollPos });
+  });
+}
   goToDish(item: MenuItem) {
     this.router.navigate(['/dish', item.id]);
   }
@@ -99,4 +115,16 @@ export class HomeComponent implements OnInit {
   scrollToMenu() {
     document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
   }
+
+     private readonly popularItemsLimit = 11;
+
+     filteredPopularItems = computed(() => {
+      const allItems = this.activeCategory() === 'all'
+        ? this.allItemsFlat()
+        : (this.categories().find(c => c.id === this.activeCategory())?.items ?? []);
+      return allItems.slice(0, this.popularItemsLimit);
+    });
+    hasMorePopularItems = computed(() => false);
+
+     showMorePopular() {}
 }
