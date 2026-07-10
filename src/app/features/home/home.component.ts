@@ -6,6 +6,7 @@ import { CartService } from '../../core/services/cart.service';
 import { debounceTime, Subject } from 'rxjs';
 import { MasonryItemDirective } from './masonry-item.directive';
 import { FooterComponent } from '../footer/footer.component';
+import { ActivatedRoute } from '@angular/router';
 
 export interface BrandChef {
   name: string;
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
   private menuService = inject(MenuService);
   private cartService = inject(CartService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   categories = signal<MenuCategory[]>([]);
   isLoading = signal(true);
@@ -95,6 +97,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadFullMenu();
+    this.route.fragment.subscribe(fragment => {
+      if (fragment === 'menu-section') {
+        setTimeout(() => {
+          this.scrollToMenu();
+          this.clearFragment();
+        }, 0);
+      } else if (fragment === 'popular-section') {
+        setTimeout(() => {
+          this.scrollToPopular();
+          this.clearFragment();
+        }, 0);
+      }
+    });
+  
+  
 
     this.searchSubject.pipe(debounceTime(400)).subscribe(query => {
       if (query.trim().length === 0) {
@@ -163,6 +180,12 @@ export class HomeComponent implements OnInit {
 
   scrollToMenu() {
     document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
+  }
+    scrollToPopular() {
+    document.getElementById('popular-section')?.scrollIntoView({ behavior: 'smooth' });
+  }
+  private clearFragment() {
+    this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
   }
 
   goToChefPage() {
